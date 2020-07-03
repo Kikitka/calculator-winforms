@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Calc
 {
-    class LineCheacker
+    class LineChecker
     {
         public string EditLine(string inputLine, string inputSymbol)
         {
@@ -37,7 +37,7 @@ namespace Calc
                         }
                         else if (inputSymbol == ")")
                         {
-                            if (!inputLine.EndsWith("("))
+                            if (!inputLine.EndsWith("(") && !CheckBrackets(inputLine))
                             {
                                 inputLine += inputSymbol;
                             }
@@ -55,6 +55,33 @@ namespace Calc
             }
 
             return inputLine;
+        }
+
+        //Проверка на правильное к-во введённых символов
+        public bool CheckBrackets(string str)
+        {
+            var countBrackets = 0;
+
+            for (var i = 0; i < str.Length; i++)
+            {
+                if (str[i] == '(')
+                {
+                    countBrackets++;
+                }
+                else if (str[i] == ')')
+                {
+                    countBrackets--;
+                }
+            }
+
+            if (countBrackets == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

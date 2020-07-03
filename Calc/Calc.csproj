@@ -48,16 +48,16 @@
   <ItemGroup>
     <Compile Include="Calculator.cs" />
     <Compile Include="LineCheacker.cs" />
-    <Compile Include="Calc.cs">
+    <Compile Include="CalculatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Calc.Designer.cs">
-      <DependentUpon>Calc.cs</DependentUpon>
+    <Compile Include="CalculatorForm.Designer.cs">
+      <DependentUpon>CalculatorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Calc.resx">
-      <DependentUpon>Calc.cs</DependentUpon>
+    <EmbeddedResource Include="CalculatorForm.resx">
+      <DependentUpon>CalculatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

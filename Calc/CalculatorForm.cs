@@ -11,21 +11,21 @@ using System.Windows.Forms;
 
 namespace Calc
 {
-    public partial class Calc : Form
+    public partial class CalculatorForm : Form
     {
-        public Calc()
+        public CalculatorForm()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void CalculatorFormLoad(object sender, EventArgs e)
         {
             AddButtons();
         }
 
         private void AddButtons()
         {
-            Button[] but = new Button[10];
+            Button[] buttonsArray = new Button[10];
 
             var x = 40;
             var y = 160;
@@ -38,18 +38,18 @@ namespace Calc
             {
                 for (var j = 0; j < 3; j++)
                 {
-                    if(i == 0)
+                    if (i == 0)
                     {
                         buttonWidth += 80;
                     }
 
-                    but[i] = new Button();
-                    but[i].BackColor = Color.White;
-                    but[i].Text = (k++).ToString();
-                    but[i].Location = new Point(x, y);
-                    but[i].Size = new Size(buttonWidth, buttonHeight);
-                    but[i].Click += ButtonOnClick;
-                    this.Controls.Add(but[i]);
+                    buttonsArray[i] = new Button();
+                    buttonsArray[i].BackColor = Color.White;
+                    buttonsArray[i].Text = (k++).ToString();
+                    buttonsArray[i].Location = new Point(x, y);
+                    buttonsArray[i].Size = new Size(buttonWidth, buttonHeight);
+                    buttonsArray[i].Click += EditInputLine;
+                    this.Controls.Add(buttonsArray[i]);
 
                     if (i == 0)
                     {
@@ -64,12 +64,12 @@ namespace Calc
             }
         }
 
-        private void ButtonOnClick(object sender, EventArgs eventArgs)
+        private void EditInputLine(object sender, EventArgs eventArgs)
         {
             var button = (Button)sender;
 
-            LineCheacker lineCheacker = new LineCheacker();
-            InputLine.Text = lineCheacker.EditLine(InputLine.Text, button.Text);
+            LineChecker lineChecker = new LineChecker();
+            InputLine.Text = lineChecker.EditLine(InputLine.Text, button.Text);
         }
 
         private void ClearLineClick(object sender, EventArgs e)
@@ -85,13 +85,17 @@ namespace Calc
             }
         }
 
-        private void EquallyButClick(object sender, EventArgs e)
+        private void EquallyButtonClick(object sender, EventArgs e)
         {
             Calculator calculator = new Calculator();
+            LineChecker lineChecker = new LineChecker();
 
-            if (InputLine.Text.Length > 0 && calculator.CheckBrackets(InputLine.Text))
+            if (InputLine.Text.Length > 0 && lineChecker.CheckBrackets(InputLine.Text))
             {
-                InputLine.Text = calculator.Calculate(InputLine.Text).ToString();
+                var result = calculator.Calculate(InputLine.Text).ToString();
+                WriteHistory(InputLine.Text, result);
+
+                InputLine.Text = result;
             }
             else
             {
@@ -101,15 +105,15 @@ namespace Calc
 
         private void WriteHistory(string str, string result)
         {
-            CalcHistory.Text += str + " = " + result + "\n";
+            CalculatorHistory.Text += str + " = " + result + "\n";
 
             //Очистка истории
-            var s = CalcHistory.Text;
-            var n = s.Count(c => c == '\n');
+            var history = CalculatorHistory.Text;
+            var countLines = history.Count(c => c == '\n');
 
-            if(n >= 10)
+            if (countLines >= 10)
             {
-                CalcHistory.Text = "";
+                CalculatorHistory.Text = "";
             }
         }
     }

@@ -10,13 +10,13 @@ namespace Calc
     class Calculator
     {
         //Перевод в обратную польскую запись
-        private List<string> ConvertToRPN(string str)
+        private List<string> ConvertToReversePolish(string str)
         {
             Stack<string> stack = new Stack<string>();
 
             Regex num = new Regex(@"\d");
 
-            List<string> temp_str = new List<string>();
+            List<string> tempStr = new List<string>();
 
             for (var i = 0; i < str.Length; i++)
             {
@@ -35,7 +35,7 @@ namespace Calc
                 //Запись числа в массив
                 if (num.IsMatch(ch))
                 {
-                    temp_str.Add(ch);
+                    tempStr.Add(ch);
                 }
                 else
                 {
@@ -46,7 +46,7 @@ namespace Calc
                         {
                             while (stack.Peek() != "(")
                             {
-                                temp_str.Add(stack.Pop());
+                                tempStr.Add(stack.Pop());
                             }
                             stack.Pop();
                         }
@@ -58,7 +58,7 @@ namespace Calc
                         {
                             while (stack.Count > 0 && CheckPriority(ch) <= CheckPriority(stack.Peek()))
                             {
-                                temp_str.Add(stack.Pop());
+                                tempStr.Add(stack.Pop());
                             }
                             stack.Push(ch);
                         }
@@ -79,17 +79,17 @@ namespace Calc
             {
                 while (stack.Count != 0)
                 {
-                    temp_str.Add(stack.Pop());
+                    tempStr.Add(stack.Pop());
                 }
             }
 
-            return temp_str;
+            return tempStr;
         }
 
         public double Calculate(string enter_str)
         {
             double result;
-            var str = ConvertToRPN(enter_str);
+            var str = ConvertToReversePolish(enter_str);
 
             if (str.Count() == 1)
             {
@@ -161,33 +161,6 @@ namespace Calc
             }
 
             return priority_ch;
-        }
-
-        //Проверка на правильное к-во введённых символов
-        public bool CheckBrackets(string str)
-        {
-            var count = 0;
-
-            for (var i = 0; i < str.Length; i++)
-            {
-                if (str[i] == '(')
-                {
-                    count++;
-                }
-                else if (str[i] == ')')
-                {
-                    count--;
-                }
-            }
-
-            if (count == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }
