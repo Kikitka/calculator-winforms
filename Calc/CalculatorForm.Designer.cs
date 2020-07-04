@@ -90,7 +90,7 @@
             this.EqualsButton.TabIndex = 5;
             this.EqualsButton.Text = "=";
             this.EqualsButton.UseVisualStyleBackColor = true;
-            this.EqualsButton.Click += new System.EventHandler(this.EquallyButtonClick);
+            this.EqualsButton.Click += new System.EventHandler(this.EqualsButtonClick);
             // 
             // ClearLine
             // 

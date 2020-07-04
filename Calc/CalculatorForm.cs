@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Calc
@@ -25,7 +19,7 @@ namespace Calc
 
         private void AddButtons()
         {
-            Button[] buttonsArray = new Button[10];
+            var buttonsArray = new Button[10];
 
             var x = 40;
             var y = 160;
@@ -43,11 +37,13 @@ namespace Calc
                         buttonWidth += 80;
                     }
 
-                    buttonsArray[i] = new Button();
-                    buttonsArray[i].BackColor = Color.White;
-                    buttonsArray[i].Text = (k++).ToString();
-                    buttonsArray[i].Location = new Point(x, y);
-                    buttonsArray[i].Size = new Size(buttonWidth, buttonHeight);
+                    buttonsArray[i] = new Button
+                    {
+                        BackColor = Color.White,
+                        Text = (k++).ToString(),
+                        Location = new Point(x, y),
+                        Size = new Size(buttonWidth, buttonHeight)
+                    };
                     buttonsArray[i].Click += EditInputLine;
                     this.Controls.Add(buttonsArray[i]);
 
@@ -68,7 +64,7 @@ namespace Calc
         {
             var button = (Button)sender;
 
-            LineChecker lineChecker = new LineChecker();
+            var lineChecker = new LineChecker();
             InputLine.Text = lineChecker.EditLine(InputLine.Text, button.Text);
         }
 
@@ -85,10 +81,10 @@ namespace Calc
             }
         }
 
-        private void EquallyButtonClick(object sender, EventArgs e)
+        private void EqualsButtonClick(object sender, EventArgs e)
         {
-            Calculator calculator = new Calculator();
-            LineChecker lineChecker = new LineChecker();
+            var calculator = new Calculator();
+            var lineChecker = new LineChecker();
 
             if (InputLine.Text.Length > 0 && lineChecker.CheckBrackets(InputLine.Text))
             {

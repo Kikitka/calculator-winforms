@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace Calc
 {
-    class Calculator
+    internal class Calculator
     {
         //Перевод в обратную польскую запись
-        private List<string> ConvertToReversePolish(string str)
+        private static List<string> ConvertToReversePolish(string str)
         {
-            Stack<string> stack = new Stack<string>();
+            var stack = new Stack<string>();
 
-            Regex num = new Regex(@"\d");
+            var num = new Regex(@"\d");
 
-            List<string> tempStr = new List<string>();
+            var tempStr = new List<string>();
 
             for (var i = 0; i < str.Length; i++)
             {
-                string ch = "";
+                var ch = "";
                 ch += str[i];
 
                 //Запись числа, в случае если оно больше 1-го символа
-                if (Char.IsDigit(str[i]) && i < str.Length - 1)
+                if (char.IsDigit(str[i]) && i < str.Length - 1)
                 {
-                    while (i + 1 < str.Length && Char.IsDigit(str[i + 1]))
+                    while (i + 1 < str.Length && char.IsDigit(str[i + 1]))
                     {
                         ch += str[++i];
                     }
@@ -86,10 +86,10 @@ namespace Calc
             return tempStr;
         }
 
-        public double Calculate(string enter_str)
+        public double Calculate(string inputStr)
         {
             double result;
-            var str = ConvertToReversePolish(enter_str);
+            var str = ConvertToReversePolish(inputStr);
 
             if (str.Count() == 1)
             {
@@ -99,23 +99,23 @@ namespace Calc
             {
                 result = 0.0;
 
-                Regex num = new Regex(@"\d");
+                var num = new Regex(@"\d");
 
-                Stack<string> stack = new Stack<string>();
+                var stack = new Stack<string>();
                 if (str.Count > 1)
                 {
-                    for (var i = 0; i < str.Count; i++)
+                    foreach (var ch in str)
                     {
-                        if (num.IsMatch(str[i]))
+                        if (num.IsMatch(ch))
                         {
-                            stack.Push(str[i]);
+                            stack.Push(ch);
                         }
                         else
                         {
                             var num1 = Convert.ToDouble(stack.Pop());
                             var num2 = Convert.ToDouble(stack.Pop());
 
-                            switch (str[i])
+                            switch (ch)
                             {
                                 case "+":
                                     result = num1 + num2;
@@ -141,26 +141,26 @@ namespace Calc
         }
 
         //Проверка приоритета
-        private int CheckPriority(string ch)
+        private static int CheckPriority(string ch)
         {
-            var priority_ch = 0;
+            var priorityCh = 0;
 
             switch (ch)
             {
                 case "(":
-                    priority_ch = 0;
+                    priorityCh = 0;
                     break;
                 case "+":
                 case "-":
-                    priority_ch = 1;
+                    priorityCh = 1;
                     break;
                 case "*":
                 case "/":
-                    priority_ch = 2;
+                    priorityCh = 2;
                     break;
             }
 
-            return priority_ch;
+            return priorityCh;
         }
     }
 }

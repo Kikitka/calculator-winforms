@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Calc
 {
-    class LineChecker
+    internal class LineChecker
     {
         public string EditLine(string inputLine, string inputSymbol)
         {
-            Regex infinity = new Regex("[∞]");
+            var infinity = new Regex("[∞]");
 
             if (inputLine == "0" || infinity.IsMatch(inputLine))
             {
@@ -21,7 +21,7 @@ namespace Calc
             if (inputLine.Length < 20)
             {
 
-                Regex num = new Regex(@"\d$");
+                var num = new Regex(@"\d$");
 
                 if (!num.IsMatch(inputSymbol))
                 {
@@ -62,13 +62,13 @@ namespace Calc
         {
             var countBrackets = 0;
 
-            for (var i = 0; i < str.Length; i++)
+            foreach (var ch in str)
             {
-                if (str[i] == '(')
+                if (ch == '(')
                 {
                     countBrackets++;
                 }
-                else if (str[i] == ')')
+                else if (ch == ')')
                 {
                     countBrackets--;
                 }
